@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+
+<h1>Login</h1>
+
+<form th:action="@{/login}" method="post" th:object="${myUser}">
+    <div>
+        <label for="username">Username</label>
+        <input type="text" id="username" th:field="*{username}" placeholder="Введите логин" required/>
+
+    </div>
+
+    <div>
+        <label for="password">Password</label>
+        <input type="password" id="password" th:field="*{password}" placeholder="Введите пароль" required/>
+
+    </div>
+
+    <div>
+        <button type="submit">Login</button>
+    </div>
+
+    <div th:if="${param.error}" style="color: crimson">
+        Неправильные имя пользователя или пароль
+
+    </div>
+
+    <p> <a th:href="@{/newUser}">Зарегистрировать пользователя</a></p>
+</form>
+</body>
+
+
+</html>
