@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class MyUserDetailsService implements UserDetailsService {
@@ -88,10 +90,18 @@ public class MyUserDetailsService implements UserDetailsService {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Transactional
     public void update(MyUser user, long id) {
+        Hibernate.initialize(user.getRoles());
         Optional<MyUser> u = findById(id);
         u.ifPresent(x -> {
             x.setUsername(user.getUsername());
             x.setAge(user.getAge());
+            Set<Role> newRoleSet = new HashSet<>(user.getRoles());
+            x.setRoles(newRoleSet);
         });
+
+    }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Set <Role> findAllRoles() {
+        return new HashSet<>(roleRepository.findAll());
     }
 }

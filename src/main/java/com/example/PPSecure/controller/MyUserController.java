@@ -43,6 +43,7 @@ public class MyUserController {
     @GetMapping("/user")
     public String editUser(@RequestParam ("id") long id, Model model) {
         model.addAttribute("user", myUserDetailsService.findById(id));
+        model.addAttribute("allRoles", myUserDetailsService.findAllRoles());
         return "editUser";
     }
 

@@ -12,6 +12,12 @@
   <label for="age">Enter age</label>
   <input type="number" th:field="*{age}" id="age" required>
   <br>
+
+  <div th:each="role : ${allRoles}">
+    <input type="checkbox" th:id="|role-${role.id}|" th:field="*{roles}" th:value="${role.id}" />
+    <label th:for="|role-${role.id}|"
+           th:text="${role.getAuthority()}"></label><br>
+    </div>
   <input type="submit" value="Update">
   <button type="submit">Logout</button>
 </form>
