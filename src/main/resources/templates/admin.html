@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+</head>
+<body>
+<h1>Admin</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Username</th>
+        <th>Age</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${myUser.getUsername()}"></td>
+        <td th:text="${myUser.getAge()}"></td>
+    </tr>
+    </tbody>
+
+</table>
+<form th:action="@{/logout}" method="post">
+    <button type="submit">Logout</button>
+</form>
+<form th:action="@{/users}" method="get">
+    <button type="submit">Users</button>
+</form>
+
+
+</body>
+</html>

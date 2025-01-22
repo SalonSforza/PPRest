@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-
 public class MyUserDetailsService implements UserDetailsService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -73,13 +72,12 @@ public class MyUserDetailsService implements UserDetailsService {
         return user;
     }
 
-    @PreAuthorize("hasrole('ROLE_ADIMIN')")
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<MyUser> findAll() {
         return myUserRepository.findAll();
     }
     @Transactional
-    @PreAuthorize("hasrole('ROLE_ADIMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteById(long id) {
         Optional<MyUser> user = findById(id);
         if (user.isPresent()) {
@@ -87,14 +85,13 @@ public class MyUserDetailsService implements UserDetailsService {
         }
     }
 
-    @PreAuthorize("hasrole('ROLE_ADIMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Transactional
     public void update(MyUser user, long id) {
         Optional<MyUser> u = findById(id);
         u.ifPresent(x -> {
             x.setUsername(user.getUsername());
             x.setAge(user.getAge());
-            x.setRoles(user.getRoles());
         });
     }
 }

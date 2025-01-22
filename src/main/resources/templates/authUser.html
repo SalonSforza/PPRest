@@ -11,18 +11,18 @@
   <thead>
   <tr>
     <th>Username</th>
-    <th>Email</th>
     <th>Age</th>
   </tr>
   </thead>
   <tbody>
   <tr>
     <td th:text="${user.get().getUsername()}"></td>
-    <td th:text="${user.get().getPassword()}"></td>
     <td th:text="${user.get().getAge()}"></td>
   </tr>
   </tbody>
 </table>
-
+<form th:action="@{/logout}" method="post">
+  <button type="submit">Logout</button>
+</form>
 </body>
 </html>

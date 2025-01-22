@@ -26,7 +26,7 @@
                 <tbody>
                 <tr th:each="user: ${users}">
                     <td th:text="${user.getId()}"/>
-                    <td th:text="${user.getName()}"/>
+                    <td th:text="${user.getUsername()}"/>
                     <td th:text="${user.getAge()}"/>
                     <td><a th:href="@{user(id=${user.getId()})}">Edit</a></td>
                     <td><a th:href="@{delete(id=${user.getId()})}">Delete</a></td>
@@ -41,6 +41,12 @@
 
 <input type="button" value="add"
        onclick="window.location.href = 'newUser'"/>
+
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit">Logout</button>
+</form>
+
 
 </body>
 </html>
