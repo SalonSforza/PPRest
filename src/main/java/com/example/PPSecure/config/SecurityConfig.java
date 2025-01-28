@@ -1,7 +1,7 @@
 package com.example.PPSecure.config;
 
 import com.example.PPSecure.security.MyUserDetails;
-import com.example.PPSecure.services.MyUserDetailsService;
+import com.example.PPSecure.services.MyUserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,11 +18,11 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfig {
 
-    MyUserDetailsService myUserDetailsService;
+    MyUserDetailsServiceImpl myUserDetailsServiceImpl;
 
     @Autowired
-    public SecurityConfig(MyUserDetailsService x) {
-        this.myUserDetailsService = x;
+    public SecurityConfig(MyUserDetailsServiceImpl x) {
+        this.myUserDetailsServiceImpl = x;
     }
 
     @Bean
