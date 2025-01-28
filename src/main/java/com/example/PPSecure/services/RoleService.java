@@ -6,4 +6,5 @@ import java.util.Set;
 
 public interface RoleService  {
     public Set<Role> findAllRoles();
+    public Role findDefaultRole();
 }

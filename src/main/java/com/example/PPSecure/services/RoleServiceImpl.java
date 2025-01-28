@@ -25,4 +25,13 @@ public class RoleServiceImpl implements RoleService {
     public Set<Role> findAllRoles() {
         return new HashSet<>(roleRepository.findAll());
     }
+
+
+    //Написал отдельный метод для поиска дефолтной роли при сохранении, чтобы убрать магическое число 1L
+    @Override
+    public Role findDefaultRole() {
+       return roleRepository.findDefaultRole();
+    }
+
+
 }

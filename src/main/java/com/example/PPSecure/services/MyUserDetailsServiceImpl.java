@@ -7,9 +7,9 @@ import com.example.PPSecure.repositories.RoleRepository;
 import com.example.PPSecure.security.MyUserDetails;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,12 +25,12 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final MyUserRepository myUserRepository;
-    private final RoleRepository roleRepository;
+    private final RoleService roleService;
 
     @Autowired
-    public MyUserDetailsServiceImpl(MyUserRepository myUserRepository, RoleRepository roleRepository) {
+    public MyUserDetailsServiceImpl(MyUserRepository myUserRepository, RoleRepository roleRepository, RoleService roleService) {
         this.myUserRepository = myUserRepository;
-        this.roleRepository = roleRepository;
+        this.roleService = roleService;
         this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
     }
 
@@ -41,9 +41,9 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
     }
 
     @Transactional
+    @Query ("SELECT u FROM MyUser u JOIN FETCH u.roles")
     public void persist(MyUser user) {
-        Hibernate.initialize(user.getRoles());
-        Optional<Role> userRole = roleRepository.findById(1L);
+        Optional<Role> userRole = Optional.ofNullable(roleService.findDefaultRole());
         if (userRole.isPresent()) {
             if (user.getRoles() == null) {
                 user.setRoles(new HashSet<>());
@@ -84,8 +84,8 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Transactional
+    @Query ("SELECT u FROM MyUser u JOIN FETCH u.roles")
     public void update(MyUser user, long id) {
-        Hibernate.initialize(user.getRoles());
         Optional<MyUser> u = findById(id);
         u.ifPresent(x -> {
             x.setUsername(user.getUsername());
