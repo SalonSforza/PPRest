@@ -84,9 +84,8 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Transactional
-    @Query ("SELECT u FROM MyUser u JOIN FETCH u.roles")
     public void update(MyUser user, long id) {
-        Optional<MyUser> u = findById(id);
+        Optional<MyUser> u = myUserRepository.findByIdWithRoles(id);
         u.ifPresent(x -> {
             x.setUsername(user.getUsername());
             x.setAge(user.getAge());
@@ -95,5 +94,4 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
         });
 
     }
-
 }
