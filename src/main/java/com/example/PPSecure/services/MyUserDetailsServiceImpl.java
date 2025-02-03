@@ -7,7 +7,6 @@ import com.example.PPSecure.repositories.RoleRepository;
 import com.example.PPSecure.security.MyUserDetails;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,19 +41,13 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
     }
 
     @Transactional
-    @Query ("SELECT u FROM MyUser u JOIN FETCH u.roles")
     public void persist(MyUser user) {
-        Optional<Role> userRole = Optional.ofNullable(roleService.findDefaultRole());
-        if (userRole.isPresent()) {
-            if (user.getRoles() == null) {
-                user.setRoles(new HashSet<>());
-            }
-            user.getRoles().add(userRole.get());
-            String encryptedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-            user.setPassword(encryptedPassword);
-            myUserRepository.save(user);
-        } else throw new UsernameNotFoundException("Role not found");
-
+        if (user.getRoles() == null) {
+            user.setRoles(new HashSet<>());
+        }
+        String encryptedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPassword);
+        myUserRepository.save(user);
 
     }
 
@@ -74,6 +67,7 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
     public List<MyUser> findAll() {
         return myUserRepository.findAll();
     }
+
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteById(long id) {
@@ -95,14 +89,15 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
         });
 
     }
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public MyUser findLoggedInUserByUserName(){
+    public MyUser findLoggedInUserByUserName() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Optional<MyUser> user = myUserRepository.findByUsername(userDetails.getUsername());
         if (user.isPresent()) {
             return user.get();
         }
-      throw new UsernameNotFoundException("User not found");
+        throw new UsernameNotFoundException("User not found");
     }
 
 
