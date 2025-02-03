@@ -7,6 +7,7 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -83,5 +84,15 @@ public class MyUser {
         return roles;
     }
 
-    
+
+    @Override
+    public String toString() {
+        return "MyUser{" +
+               "id=" + id +
+               ", username='" + username + '\'' +
+               ", age=" + age +
+               ", password='" + password + '\'' +
+               ", roles=" + roles +
+               '}';
+    }
 }

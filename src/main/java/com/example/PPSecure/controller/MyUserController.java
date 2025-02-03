@@ -34,7 +34,7 @@ public class MyUserController {
     @PostMapping ("/newUser")
     public String saveUser(@ModelAttribute("user") MyUser user) {
         myUserDetailsServiceImpl.persist(user);
-        return "redirect:/allUsers";
+        return "redirect:/users";
     }
 
     @GetMapping("/delete")
