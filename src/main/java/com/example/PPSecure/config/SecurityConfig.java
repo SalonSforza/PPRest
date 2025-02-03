@@ -38,13 +38,12 @@ public class SecurityConfig {
                             Object principal = authentication.getPrincipal();
                             String redirectUrl;
                             MyUserDetails myUserDetails = (MyUserDetails) principal;
-                            String id = String.valueOf(myUserDetails.getMyUser().getId());
                             boolean isAdmin = myUserDetails.getAuthorities().stream()
                                     .anyMatch(x -> x.getAuthority().equals("ROLE_ADMIN"));
                             if (isAdmin) {
                                 redirectUrl = "/admin";
                             } else {
-                                redirectUrl = "/authUser";
+                                redirectUrl = "/authUser/";
                             }
                     response.sendRedirect(redirectUrl);
                         })
