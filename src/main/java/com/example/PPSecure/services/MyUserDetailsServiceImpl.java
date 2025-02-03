@@ -9,6 +9,7 @@ import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -94,4 +95,15 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
         });
 
     }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public MyUser findLoggedInAdmin(){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<MyUser> user = myUserRepository.findByUsername(userDetails.getUsername());
+        if (user.isPresent()) {
+            return user.get();
+        }
+      throw new UsernameNotFoundException("User not found");
+    }
+
+
 }
