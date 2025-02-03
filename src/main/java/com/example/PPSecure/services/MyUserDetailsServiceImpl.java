@@ -83,7 +83,7 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
         }
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
     @Transactional
     public void update(MyUser user, long id) {
         Optional<MyUser> u = myUserRepository.findByIdWithRoles(id);
@@ -95,8 +95,8 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
         });
 
     }
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public MyUser findLoggedInAdmin(){
+
+    public MyUser findLoggedInUserByUserName(){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Optional<MyUser> user = myUserRepository.findByUsername(userDetails.getUsername());
         if (user.isPresent()) {

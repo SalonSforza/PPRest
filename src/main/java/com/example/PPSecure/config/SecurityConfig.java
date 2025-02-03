@@ -44,7 +44,7 @@ public class SecurityConfig {
                             if (isAdmin) {
                                 redirectUrl = "/admin";
                             } else {
-                                redirectUrl = "/authUser/" + id;
+                                redirectUrl = "/authUser";
                             }
                     response.sendRedirect(redirectUrl);
                         })

@@ -56,15 +56,15 @@ public class MyUserController {
         return "redirect:/users";
     }
 
-    @GetMapping("/authUser/{id}")
-    public String authUser(@PathVariable long id, Model model) {
-        model.addAttribute("user", myUserDetailsServiceImpl.findById(id));
+    @GetMapping("/authUser")
+    public String authUser( Model model) {
+        model.addAttribute("user", myUserDetailsServiceImpl.findLoggedInUserByUserName());
         return "authUser";
     }
 
     @GetMapping("/admin")
     public String adminLogIn(Model model) {
-        model.addAttribute("user", myUserDetailsServiceImpl.findLoggedInAdmin());
+        model.addAttribute("user", myUserDetailsServiceImpl.findLoggedInUserByUserName());
         return "admin";
     }
 
