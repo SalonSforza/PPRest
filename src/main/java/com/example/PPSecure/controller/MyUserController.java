@@ -65,6 +65,7 @@ public class MyUserController {
     @GetMapping("/admin")
     public String adminLogIn(Model model) {
         model.addAttribute("user", myUserDetailsServiceImpl.findLoggedInUserByUserName());
+        model.addAttribute("users", myUserDetailsServiceImpl.findAll());
         return "admin";
     }
 
