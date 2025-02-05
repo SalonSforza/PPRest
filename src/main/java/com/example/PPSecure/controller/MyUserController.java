@@ -28,13 +28,13 @@ public class MyUserController {
 
     @GetMapping("/newUser")
     public String newUser(Model model) {
-        model.addAttribute("myUser", new MyUser());
-        return "userForm";
+        model.addAttribute("user", new MyUser());
+        return "admin";
     }
     @PostMapping ("/newUser")
     public String saveUser(@ModelAttribute("user") MyUser user) {
         myUserDetailsServiceImpl.persist(user);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
     @GetMapping("/delete")
