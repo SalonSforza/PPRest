@@ -28,26 +28,26 @@
         .striped-div {
             display: block;
             width: 100%;
-            border: 1px solid rgba(0, 0, 0, 0.1);  /* Subtle border around the div */
+            border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle border around the div */
             border-radius: 4px;
-            background-color: #ffffff;  /* Default background color for div */
+            background-color: #ffffff; /* Default background color for div */
         }
 
         .striped-div > div:nth-child(odd) {
-            background-color: #f9f9f9;  /* Light background for odd sections */
+            background-color: #f9f9f9; /* Light background for odd sections */
         }
 
         .striped-div > div:nth-child(even) {
-            background-color: #ffffff;  /* Default background for even sections */
+            background-color: #ffffff; /* Default background for even sections */
         }
 
         .striped-div > div {
             padding: 10px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);  /* Light border between sections */
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Light border between sections */
         }
 
         .striped-div > div:last-child {
-            border-bottom: none;  /* Remove border for the last section */
+            border-bottom: none; /* Remove border for the last section */
         }
     </style>
 </head>
@@ -95,35 +95,43 @@
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
-                <div  class="tab-pane fade show active " id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                    <div class="striped-div mt-0.1 ps-4 p-2 bg-light d-flex align-items-center "><h5>All Users</h5></div>
+                <div class="tab-pane fade show active " id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="striped-div mt-0.1 ps-4 p-2 bg-light d-flex align-items-center "><h5>All Users</h5>
+                    </div>
                     <div class="striped-div bg-white p-3">
-                    <table class="table table-striped table-hover mt-2 border-top">
+                        <table class="table table-striped table-hover mt-2 border-top">
 
-                        <thead>
+                            <thead>
 
-                        <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Age</th>
-                            <th scope="col">Roles</th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                        </tr>
-                        <tbody>
-                        <tr th:each="user: ${users}">
-                            <td th:text="${user.getId()}"/>
-                            <td th:text="${user.getUsername()}"/>
-                            <td th:text="${user.getAge()}"/>
-                            <td>
-                                <div th:each="role : ${user.getRoles()}" th:text="${role.getAuthority()}"></div>
-                            </td>
-                            <td><a th:href="@{user(id=${user.getId()})}">Edit</a></td>
-                            <td><a th:href="@{delete(id=${user.getId()})}">Delete</a></td>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Age</th>
+                                <th scope="col">Roles</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                            <tbody>
+                            <tr th:each="user: ${users}">
+                                <td th:text="${user.getId()}"/>
+                                <td th:text="${user.getUsername()}"/>
+                                <td th:text="${user.getAge()}"/>
+                                <td>
+                                    <div th:each="role : ${user.getRoles()}" th:text="${role.getAuthority()}"></div>
+                                </td>
+                                <td><a th:href="@{user(id=${user.getId()})}">Edit</a></td>
+                                <td>
+                                    <button class="btn btn-danger">
+                                        <a th:href="@{delete(id=${user.getId()})}" class="text-white"
+                                           style="text-decoration: none;">
+                                            Delete
+                                        </a>
+                                    </button>
 
-                        </tr>
-                        </tbody>
-                    </table>
+
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
 
                 </div>
@@ -134,13 +142,12 @@
             </div>
 
 
-
-            </div>
-
-
         </div>
+
+
     </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
