@@ -113,13 +113,50 @@
                             </tr>
                             <tbody>
                             <tr th:each="user: ${users}">
-                                <td th:text="${user.getId()}"/>
-                                <td th:text="${user.getUsername()}"/>
-                                <td th:text="${user.getAge()}"/>
+                                <td th:text="${user.getId()}"></td>
+                                <td th:text="${user.getUsername()}"></td>
+                                <td th:text="${user.getAge()}"></td>
                                 <td>
                                     <div th:each="role : ${user.getRoles()}" th:text="${role.getAuthority()}"></div>
                                 </td>
-                                <td><a th:href="@{user(id=${user.getId()})}">Edit</a></td>
+                                <td>
+                                    <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                            data-bs-target="#editUserModal"  th:data-bs-user-id="${user.getId()}" >
+                                        Edit User
+                                    </button>
+
+                                    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form th:action="@{/user(id=${user.getId()})}" method="POST" th:object="${user}">
+                                                        <label for="username">Enter username</label>
+                                                        <input type="text" th:field="*{username}" id="username" required>
+                                                        <br>
+                                                        <label for="age">Enter age</label>
+                                                        <input type="number" th:field="*{age}" id="age" required>
+                                                        <br>
+
+                                                        <div th:each="role : ${allRoles}">
+                                                            <input type="checkbox" th:id="|role-${role.id}|" th:field="*{roles}" th:value="${role.id}" />
+                                                            <label th:for="|role-${role.id}|"
+                                                                   th:text="${role.getAuthority()}"></label><br>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Edit user</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                 <td>
                                     <button class="btn btn-danger">
                                         <a th:href="@{delete(id=${user.getId()})}" class="text-white"
@@ -162,6 +199,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/js/bootstrap.min.js"
         integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
         crossorigin="anonymous"></script>
+
+
+<!-- Modal for deletion -->
 
 
 </body>

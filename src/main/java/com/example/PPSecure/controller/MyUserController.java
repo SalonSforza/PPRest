@@ -40,20 +40,20 @@ public class MyUserController {
     @GetMapping("/delete")
     public String deleteUser(@RequestParam("id") long id) {
         myUserDetailsServiceImpl.deleteById(id);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
     @GetMapping("/user")
     public String editUser(@RequestParam ("id") long id, Model model) {
         model.addAttribute("user", myUserDetailsServiceImpl.findById(id));
         model.addAttribute("allRoles", roleServiceImpl.findAllRoles());
-        return "editUser";
+        return "admin";
     }
 
     @PostMapping("/user")
     public String updateUser(@ModelAttribute("user") MyUser user,@RequestParam ("id") long id) {
         myUserDetailsServiceImpl.update(user,id);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
     @GetMapping("/authUser")
@@ -66,6 +66,7 @@ public class MyUserController {
     public String adminLogIn(Model model) {
         model.addAttribute("user", myUserDetailsServiceImpl.findLoggedInUserByUserName());
         model.addAttribute("users", myUserDetailsServiceImpl.findAll());
+        model.addAttribute("allRoles", roleServiceImpl.findAllRoles());
         return "admin";
     }
 
