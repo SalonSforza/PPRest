@@ -25,7 +25,7 @@ public class MyUserController {
         model.addAttribute("users", myUserDetailsServiceImpl.findAll());
         return "allUsers";
     }
-
+    // Проверить на необходимость или удалить потом
     @GetMapping("/newUser")
     public String newUser(Model model) {
         model.addAttribute("user", new MyUser());
@@ -36,7 +36,7 @@ public class MyUserController {
         myUserDetailsServiceImpl.persist(user);
         return "redirect:/admin";
     }
-
+    // Проверить на необходимость или удалить потом
     @GetMapping("/delete")
     public String findUserToDeleteUser(@RequestParam("id") long id, Model model) {
         model.addAttribute("user", myUserDetailsServiceImpl.findById(id));
@@ -72,6 +72,7 @@ public class MyUserController {
         model.addAttribute("user", myUserDetailsServiceImpl.findLoggedInUserByUserName());
         model.addAttribute("users", myUserDetailsServiceImpl.findAll());
         model.addAttribute("allRoles", roleServiceImpl.findAllRoles());
+        model.addAttribute("newUser", new MyUser());
         return "admin";
     }
 
