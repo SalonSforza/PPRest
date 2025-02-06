@@ -38,11 +38,16 @@ public class MyUserController {
     }
 
     @GetMapping("/delete")
-    public String deleteUser(@RequestParam("id") long id) {
+    public String findUserToDeleteUser(@RequestParam("id") long id, Model model) {
+        model.addAttribute("user", myUserDetailsServiceImpl.findById(id));
+        return "/admin";
+    }
+
+    @PostMapping("/delete")
+    public String deleteUser(@RequestParam ("id") long id) {
         myUserDetailsServiceImpl.deleteById(id);
         return "redirect:/admin";
     }
-
     @GetMapping("/user")
     public String editUser(@RequestParam ("id") long id, Model model) {
         model.addAttribute("user", myUserDetailsServiceImpl.findById(id));

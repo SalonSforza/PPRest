@@ -30,7 +30,7 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/login", "/newUser")
+                        .requestMatchers("/login")
                         .permitAll()
                         .anyRequest()
                         .authenticated())
@@ -43,7 +43,7 @@ public class SecurityConfig {
                             if (isAdmin) {
                                 redirectUrl = "/admin";
                             } else {
-                                redirectUrl = "/authUser/";
+                                redirectUrl = "/user";
                             }
                     response.sendRedirect(redirectUrl);
                         })

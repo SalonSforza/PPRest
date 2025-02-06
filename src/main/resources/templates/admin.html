@@ -166,13 +166,50 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <!-- Delete button -->
-                                    <button class="btn btn-danger">
-                                        <a th:href="@{delete(id=${user.getId()})}" class="text-white"
-                                           style="text-decoration: none;">
-                                            Delete
-                                        </a>
+                                    <!-- Delete button to trigger modal -->
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                            th:data-bs-target="'#deleteUserModal' + ${user.getId()}">Delete
                                     </button>
+
+                                    <!-- Modal for deleting user -->
+                                    <div class="modal fade" th:id="'deleteUserModal' + ${user.getId()}" tabindex="-1"
+                                         aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteUserModalLabel">Delete User</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <!-- Form for deletion confirmation -->
+                                                    <form id="deleteForm" th:action="@{/delete(id=${user.getId()})}" method="POST">
+                                                        <div class="form-group">
+                                                            <label for="username2">Username</label>
+                                                            <input type="text" th:value="${user.getUsername()}" id="username2" disabled class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="age2">Age</label>
+                                                            <input type="number" th:value="${user.getAge()}" id="age2" disabled class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Roles</label>
+                                                            <div th:each="role : ${user.getRoles()}">
+                                                                <input type="checkbox" th:id="|role-${role.id}|"
+                                                                       th:value="${role.id}" disabled />
+                                                                <label th:for="|role-${role.id}|"
+                                                                       th:text="${role.getAuthority()}"></label><br>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <!-- Submit button inside the form for deleting the user -->
+                                                    <button type="submit" class="btn btn-danger" form="deleteForm">Delete user</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             </tbody>
@@ -181,7 +218,7 @@
 
                 </div>
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                    <!-- Link to trigger the modal for adding a new user -->
+
                     <a href="/newUser" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">
                         Add New User
                     </a>
