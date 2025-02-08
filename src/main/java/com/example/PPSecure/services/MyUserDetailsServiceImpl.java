@@ -1,11 +1,9 @@
 package com.example.PPSecure.services;
 
 import com.example.PPSecure.model.MyUser;
-import com.example.PPSecure.model.Role;
 import com.example.PPSecure.repositories.MyUserRepository;
 import com.example.PPSecure.repositories.RoleRepository;
 import com.example.PPSecure.security.MyUserDetails;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class MyUserDetailsServiceImpl implements MyUserDetailsService {
@@ -81,12 +78,20 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
     @Transactional
     public void update(MyUser user, long id) {
         System.out.println(id);
-        MyUser u = myUserRepository.findById2(id);
+        Optional <MyUser> u = myUserRepository.findById(id);
+
         System.out.println(u);
-        u.setUsername(user.getUsername());
-        u.setAge(user.getAge());
-            Set<Role> newRoleSet = new HashSet<>(user.getRoles());
-            u.setRoles(newRoleSet);
+       if(u.isPresent()) {
+           if(u.get().getRoles() == null) {
+           u.get().setRoles(new HashSet<>());
+       }
+           u.get().setUsername(user.getUsername());
+           u.get().setAge(user.getAge());
+           u.get().setRoles(user.getRoles());
+       } else {
+           throw new UsernameNotFoundException("User not found");
+       }
+
 
 
 

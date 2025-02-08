@@ -12,13 +12,12 @@ import java.util.Optional;
 public interface MyUserRepository extends JpaRepository<MyUser, Long> {
     Optional<MyUser> findByUsername(String name);
 
-    @Query("SELECT u FROM MyUser u JOIN FETCH u.roles WHERE u.id = :id")
-    Optional<MyUser> findByIdWithRoles(@Param("id") long id);
-    @Query ("SELECT u FROM MyUser u JOIN FETCH u.roles WHERE u.id = :id")
+
+
+
     public Optional<MyUser> findById(@Param ("id")long id);
 
-    @Query (value = "select * from ppsec.user where id = :id",nativeQuery = true)
-    public MyUser findById2(@Param ("id")long id);
+
 
 
 }
