@@ -50,13 +50,15 @@ public class MyUserController {
     }
     @GetMapping("/user")
     public String editUser(@RequestParam ("id") long id, Model model) {
-        model.addAttribute("user", myUserDetailsServiceImpl.findById(id));
+        MyUser user = myUserDetailsServiceImpl.findById(id);
+        model.addAttribute("user",user);
         model.addAttribute("allRoles", roleServiceImpl.findAllRoles());
-        return "admin";
+      return "admin";
     }
 
     @PostMapping("/user")
     public String updateUser(@ModelAttribute("user") MyUser user,@RequestParam ("id") long id) {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + user);
         myUserDetailsServiceImpl.update(user,id);
         return "redirect:/admin";
     }
@@ -73,6 +75,7 @@ public class MyUserController {
         model.addAttribute("users", myUserDetailsServiceImpl.findAll());
         model.addAttribute("allRoles", roleServiceImpl.findAllRoles());
         model.addAttribute("newUser", new MyUser());
+        model.addAttribute("user", new MyUser());
         return "admin";
     }
 

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface MyUserDetailsService extends UserDetailsService {
     public void persist(MyUser user);
-    @Query("")
+
     public MyUser findById(long id);
     public List<MyUser> findAll();
     public void deleteById(long id);

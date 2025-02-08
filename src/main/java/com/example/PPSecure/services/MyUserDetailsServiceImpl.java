@@ -80,13 +80,15 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Transactional
     public void update(MyUser user, long id) {
-        Optional<MyUser> u = myUserRepository.findById(id);
-        u.ifPresent(x -> {
-            x.setUsername(user.getUsername());
-            x.setAge(user.getAge());
+        System.out.println(id);
+        MyUser u = myUserRepository.findById2(id);
+        System.out.println(u);
+        u.setUsername(user.getUsername());
+        u.setAge(user.getAge());
             Set<Role> newRoleSet = new HashSet<>(user.getRoles());
-            x.setRoles(newRoleSet);
-        });
+            u.setRoles(newRoleSet);
+
+
 
     }
 

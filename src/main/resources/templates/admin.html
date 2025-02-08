@@ -120,15 +120,55 @@
                                     <div th:each="role : ${user.getRoles()}" th:text="${role.getAuthority()}"></div>
                                 </td>
                                 <td>
-                                    <!-- Button to trigger the modal for editing -->
                                     <button type="button" class="btn btn-info text-white" data-bs-toggle="modal"
                                             th:data-bs-target="'#editUserModal' + ${user.getId()}">
                                         Edit User
                                     </button>
-
-                                    <!-- Modal for editing the user, id is dynamically set -->
+                                    <div class="modal fade" th:id="'editUserModal' + ${user.getId()}" tabindex="-1"
+                                         aria-labelledby="editUserModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form th:action="@{/user(id=${user.getId()})}" method="POST"
+                                                          id="deleteUserForm1" th:object="${user}">
+                                                        <div class="form-group">
+                                                            <label for="username4">Username</label>
+                                                            <input type="text" th:field="*{username}"
+                                                                   id="username4"  class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="age4">Age</label>
+                                                            <input type="number" th:field="*{age}" id="age4"
+                                                                   class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Roles</label>
+                                                            <div th:each="role : ${allRoles}">
+                                                                <input type="checkbox" th:id="|role-${role.id}|" th:field="*{roles}" th:value="${role.id}" />
+                                                                <label th:for="|role-${role.id}|"
+                                                                       th:text="${role.getAuthority()}"></label><br>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Cancel
+                                                            </button>
+                                                            <button type="submit" class="btn btn-info">Update</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                 </td>
+
+
                                 <td>
                                     <!-- Delete button to trigger modal -->
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"

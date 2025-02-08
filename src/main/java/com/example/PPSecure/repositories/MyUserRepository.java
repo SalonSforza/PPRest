@@ -2,6 +2,7 @@ package com.example.PPSecure.repositories;
 
 import com.example.PPSecure.model.MyUser;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -15,4 +16,9 @@ public interface MyUserRepository extends JpaRepository<MyUser, Long> {
     Optional<MyUser> findByIdWithRoles(@Param("id") long id);
     @Query ("SELECT u FROM MyUser u JOIN FETCH u.roles WHERE u.id = :id")
     public Optional<MyUser> findById(@Param ("id")long id);
+
+    @Query (value = "select * from ppsec.user where id = :id",nativeQuery = true)
+    public MyUser findById2(@Param ("id")long id);
+
+
 }
