@@ -52,15 +52,15 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
     }
 
 
-    public Optional<MyUser> findById(long id) {
+    public MyUser findById(long id) {
 
         Optional<MyUser> user = myUserRepository.findById(id);
 
         if (user.isEmpty()) {
             throw new UsernameNotFoundException("User not found");
         }
-        Hibernate.initialize(user.get().getRoles());
-        return user;
+
+        return user.get();
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -71,7 +71,7 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteById(long id) {
-        Optional<MyUser> user = findById(id);
+      Optional<MyUser> user = Optional.ofNullable(findById(id));
         if (user.isPresent()) {
             myUserRepository.deleteById(id);
         }

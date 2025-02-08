@@ -13,4 +13,6 @@ public interface MyUserRepository extends JpaRepository<MyUser, Long> {
 
     @Query("SELECT u FROM MyUser u JOIN FETCH u.roles WHERE u.id = :id")
     Optional<MyUser> findByIdWithRoles(@Param("id") long id);
+    @Query ("SELECT u FROM MyUser u JOIN FETCH u.roles WHERE u.id = :id")
+    public Optional<MyUser> findById(@Param ("id")long id);
 }

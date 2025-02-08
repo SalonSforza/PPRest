@@ -69,7 +69,7 @@ public class MyUserController {
 
     @GetMapping("/admin")
     public String adminLogIn(Model model) {
-        model.addAttribute("user", myUserDetailsServiceImpl.findLoggedInUserByUserName());
+        model.addAttribute("user1", myUserDetailsServiceImpl.findLoggedInUserByUserName());
         model.addAttribute("users", myUserDetailsServiceImpl.findAll());
         model.addAttribute("allRoles", roleServiceImpl.findAllRoles());
         model.addAttribute("newUser", new MyUser());
