@@ -136,23 +136,28 @@
                                                 <div class="modal-body">
                                                     <form th:action="@{/user(id=${user.getId()})}" method="POST"
                                                           id="deleteUserForm1" th:object="${user}">
-                                                        <div class="form-group">
-                                                            <label for="username4">Username</label>
+                                                        <div class="form-group d-flex flex-column align-items-center">
+                                                            <label class="mt-2" for="userID"><strong>ID</strong></label>
+                                                            <input type="number" th:field="*{id}" id="userID"
+                                                                   class="form-control w-50" disabled>
+                                                        </div>
+                                                        <div class="form-group d-flex flex-column align-items-center">
+                                                            <label class="mt-2" for="username4"><strong>Username</strong></label>
                                                             <input type="text" th:field="*{username}"
-                                                                   id="username4"  class="form-control">
+                                                                   id="username4"  class="form-control w-50" th:placeholder="${user.getUsername()}">
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label for="age4">Age</label>
+                                                        <div class="form-group d-flex flex-column align-items-center">
+                                                            <label class="mt-2" for="age4"><strong>Age</strong></label>
                                                             <input type="number" th:field="*{age}" id="age4"
-                                                                   class="form-control">
+                                                                   class="form-control w-50">
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label>Roles</label>
-                                                            <div th:each="role : ${allRoles}">
-                                                                <input type="checkbox" th:id="|role-${role.id}|" th:field="*{roles}" th:value="${role.id}" />
-                                                                <label th:for="|role-${role.id}|"
-                                                                       th:text="${role.getAuthority()}"></label><br>
-                                                            </div>
+                                                        <div class="d-flex flex-column align-items-center">
+                                                            <label for="roles1"  class="text-center mt-3"><strong>Role</strong></label>
+                                                            <select th:field="*{roles}" multiple="multiple" id="roles1" class="form-select text-center w-50 mb-3" >
+                                                                <option  th:each="role : ${allRoles}"
+                                                                         th:value="${role.id}"
+                                                                         th:text="${role.getAuthority()}"></option>
+                                                            </select>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"
@@ -187,24 +192,28 @@
                                                 <div class="modal-body">
                                                     <form th:action="@{/delete(id=${user.getId()})}" method="POST"
                                                           id="deleteUserForm">
-                                                        <div class="form-group">
-                                                            <label for="username2">Username</label>
-                                                            <input type="text" th:value="${user.getUsername()}"
-                                                                   id="username2" disabled class="form-control">
+                                                        <div class="form-group d-flex flex-column align-items-center">
+                                                            <label class="mt-2" for="userID2"><strong>ID</strong></label>
+                                                            <input type="number" th:value="*{user.getId()}" id="userID2"
+                                                                   class="form-control w-50" disabled>
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label for="age2">Age</label>
+                                                        <div class="form-group d-flex flex-column align-items-center">
+                                                            <label class="mt-2" for="username2"><strong>Username</strong></label>
+                                                            <input class="form-control w-50" type="text" th:value="${user.getUsername()}"
+                                                                   id="username2" disabled >
+                                                        </div>
+                                                        <div class="form-group d-flex flex-column align-items-center">
+                                                            <label class="mt-2" for="age2"><strong>Age</strong></label>
                                                             <input type="number" th:value="${user.getAge()}" id="age2"
-                                                                   disabled class="form-control">
+                                                                   disabled class="form-control w-50">
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label>Roles</label>
-                                                            <div th:each="role : ${user.getRoles()}">
-                                                                <input type="checkbox" th:id="|role-${role.id}|"
-                                                                       th:value="${role.id}" disabled/>
-                                                                <label th:for="|role-${role.id}|"
-                                                                       th:text="${role.getAuthority()}"></label><br>
-                                                            </div>
+                                                        <div class="d-flex flex-column align-items-center">
+                                                            <label for="roles"  class="text-center mt-3"><strong>Role</strong></label>
+                                                            <select th:field="*{user.roles}" multiple="multiple" disabled id="roles" class="form-select text-center w-50 mb-3" >
+                                                                <option  th:each="role : ${user.getRoles()}"
+                                                                        th:value="${role.id}"
+                                                                        th:text="${role.getAuthority()}"></option>
+                                                            </select>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"
