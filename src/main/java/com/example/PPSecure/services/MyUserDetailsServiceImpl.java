@@ -97,7 +97,7 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
 
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
     public MyUser findLoggedInUserByUserName() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Optional<MyUser> user = myUserRepository.findByUsername(userDetails.getUsername());

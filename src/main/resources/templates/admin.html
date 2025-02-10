@@ -261,21 +261,47 @@
                 </div>
             </div>
 
-            <div  id="usertab" class="tab-pane fade collapse">
-               <nav>
-                <h1 class="text mt-3 ms-3">User info page</h1>
-               </nav>
+            <div id="usertab" class="tab-pane fade collapse">
+                <nav>
+                    <h1 class="text mt-3 ms-3">User info page</h1>
+                </nav>
                 <div class="striped-div mt-0.1 ps-4 p-2 bg-light d-flex align-items-center "><h5>About user</h5>
                 </div>
+                <div class="striped-div bg-white p-3">
+
+                    <table class="table table-striped table-hover mt-2 border-top">
+
+                        <thead>
+
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Roles</th>
+
+                        </tr>
+                        <tbody>
+                        <tr>
+                            <td th:text="${user1.getId()}"></td>
+                            <td th:text="${user1.getUsername()}"></td>
+                            <td th:text="${user1.getAge()}"></td>
+                            <td>
+                                <div th:each="role : ${user1.getRoles()}" th:text="${role.getAuthority()}"></div>
+                            </td>
 
 
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
             </div>
+
+
         </div>
 
-
-
     </div>
-
 </div>
 
 

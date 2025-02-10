@@ -25,7 +25,7 @@ public class MyUserController {
         model.addAttribute("users", myUserDetailsServiceImpl.findAll());
         return "allUsers";
     }
-    // Проверить на необходимость или удалить потом
+
     @GetMapping("/newUser")
     public String newUser(Model model) {
         model.addAttribute("user", new MyUser());
@@ -58,7 +58,6 @@ public class MyUserController {
 
     @PostMapping("/user")
     public String updateUser(@ModelAttribute("user") MyUser user,@RequestParam ("id") long id) {
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + user);
         myUserDetailsServiceImpl.update(user,id);
         return "redirect:/admin";
     }
@@ -85,6 +84,7 @@ public class MyUserController {
         model.addAttribute("myUser", new MyUser());
        return "login";
     }
+
 
 
 

@@ -43,8 +43,8 @@ public class SecurityConfig {
                             if (isAdmin) {
                                 redirectUrl = "/admin";
                             } else {
-                                redirectUrl = "/user";
-                            }
+                                redirectUrl = "/authUser";
+                        }
                     response.sendRedirect(redirectUrl);
                         })
                 ).formLogin(form -> form.loginPage("/login"))
