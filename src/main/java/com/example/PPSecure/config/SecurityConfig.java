@@ -1,7 +1,7 @@
 package com.example.PPSecure.config;
 
-import com.example.PPSecure.security.MyUserDetails;
-import com.example.PPSecure.services.MyUserDetailsServiceImpl;
+import com.example.PPSecure.security.UserDetails;
+import com.example.PPSecure.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,10 +18,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfig {
 
-    MyUserDetailsServiceImpl myUserDetailsServiceImpl;
+    UserServiceImpl myUserDetailsServiceImpl;
 
     @Autowired
-    public SecurityConfig(MyUserDetailsServiceImpl x) {
+    public SecurityConfig(UserServiceImpl x) {
         this.myUserDetailsServiceImpl = x;
     }
 
@@ -37,8 +37,8 @@ public class SecurityConfig {
                 .formLogin(form -> form.successHandler((request, response, authentication) -> {
                             Object principal = authentication.getPrincipal();
                             String redirectUrl;
-                            MyUserDetails myUserDetails = (MyUserDetails) principal;
-                            boolean isAdmin = myUserDetails.getAuthorities().stream()
+                            UserDetails userDetails = (UserDetails) principal;
+                            boolean isAdmin = userDetails.getAuthorities().stream()
                                     .anyMatch(x -> x.getAuthority().equals("ROLE_ADMIN"));
                             if (isAdmin) {
                                 redirectUrl = "/admin";

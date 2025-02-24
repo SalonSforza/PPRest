@@ -1,7 +1,7 @@
 package com.example.PPSecure.controller;
 
 import com.example.PPSecure.model.MyUser;
-import com.example.PPSecure.services.MyUserDetailsServiceImpl;
+import com.example.PPSecure.services.UserServiceImpl;
 import com.example.PPSecure.services.RoleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class MyUserController {
 
-    MyUserDetailsServiceImpl myUserDetailsServiceImpl;
+    UserServiceImpl myUserDetailsServiceImpl;
     RoleServiceImpl roleServiceImpl;
 
     @Autowired
-    public MyUserController(MyUserDetailsServiceImpl myUserDetailsServiceImpl, RoleServiceImpl roleServiceImpl) {
+    public MyUserController(UserServiceImpl myUserDetailsServiceImpl, RoleServiceImpl roleServiceImpl) {
         this.myUserDetailsServiceImpl = myUserDetailsServiceImpl;
         this.roleServiceImpl = roleServiceImpl;
     }
@@ -33,7 +33,7 @@ public class MyUserController {
     }
     @PostMapping ("/newUser")
     public String saveUser(@ModelAttribute("user") MyUser user) {
-        myUserDetailsServiceImpl.persist(user);
+        myUserDetailsServiceImpl.save(user);
         return "redirect:/admin";
     }
     // Проверить на необходимость или удалить потом

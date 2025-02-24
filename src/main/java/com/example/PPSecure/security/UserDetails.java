@@ -2,15 +2,14 @@ package com.example.PPSecure.security;
 
 import com.example.PPSecure.model.MyUser;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
 
-public class MyUserDetails implements UserDetails {
+public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
     private final MyUser myUser;
 
-    public MyUserDetails(MyUser myUser) {
+    public UserDetails(MyUser myUser) {
         this.myUser = myUser;
     }
 
