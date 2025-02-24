@@ -1,16 +1,16 @@
 package com.example.PPSecure.services;
 
-import com.example.PPSecure.model.MyUser;
+import com.example.PPSecure.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
 public interface UserService extends UserDetailsService {
-    void save(MyUser user);
+    void save(User user);
 
-    MyUser findById(long id);
-   List<MyUser> findAll();
+    User findById(long id);
+   List<User> findAll();
      void deleteById(long id);
-     void update(MyUser user, long id);
+     void update(User user, long id);
 
 }

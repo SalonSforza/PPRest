@@ -1,7 +1,6 @@
 package com.example.PPSecure.model;
 
 import jakarta.persistence.*;
-import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Set;
@@ -19,7 +18,7 @@ public class Role implements GrantedAuthority {
             mappedBy = "roles"
     )
 
-    private Set<MyUser> myUsers;
+    private Set<User> users;
 
     public Role() {
     }
@@ -49,11 +48,11 @@ public class Role implements GrantedAuthority {
         this.roleDesignation = roleDesignation;
     }
 
-    public Set<MyUser> getMyUsers() {
-        return myUsers;
+    public Set<User> getMyUsers() {
+        return users;
     }
 
-    public void setMyUsers(Set<MyUser> myUsers) {
-        this.myUsers = myUsers;
+    public void setMyUsers(Set<User> users) {
+        this.users = users;
     }
 }

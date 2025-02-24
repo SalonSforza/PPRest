@@ -27,11 +27,4 @@ public class RoleServiceImpl implements RoleService {
     }
 
 
-    //Написал отдельный метод для поиска дефолтной роли при сохранении, чтобы убрать магическое число 1L
-    @Override
-    public Role findDefaultRole() {
-       return roleRepository.findDefaultRole();
-    }
-
-
 }

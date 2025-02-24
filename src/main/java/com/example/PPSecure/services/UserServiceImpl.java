@@ -1,6 +1,6 @@
 package com.example.PPSecure.services;
 
-import com.example.PPSecure.model.MyUser;
+import com.example.PPSecure.model.User;
 import com.example.PPSecure.repositories.RoleRepository;
 import com.example.PPSecure.repositories.UserRepository;
 import com.example.PPSecure.security.UserDetails;
@@ -21,12 +21,12 @@ public class UserServiceImpl implements UserService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserRepository userRepository;
-    private final RoleService roleService;
+
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, RoleService roleService) {
         this.userRepository = userRepository;
-        this.roleService = roleService;
+
         this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
     }
 
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public void save(MyUser user) {
+    public void save(User user) {
         if (user.getRoles() == null) {
             user.setRoles(new HashSet<>());
         }
@@ -48,26 +48,22 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public MyUser findById(long id) {
+    public User findById(long id) {
 
-        Optional<MyUser> user = userRepository.findById(id);
+        Optional<User> user = userRepository.findById(id);
 
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException("User not found");
-        }
-
-        return user.get();
+        return user.orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<MyUser> findAll() {
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteById(long id) {
-      Optional<MyUser> user = Optional.ofNullable(findById(id));
+      Optional<User> user = Optional.ofNullable(findById(id));
         if (user.isPresent()) {
             userRepository.deleteById(id);
         }
@@ -75,11 +71,10 @@ public class UserServiceImpl implements UserService {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Transactional
-    public void update(MyUser user, long id) {
+    public void update(User user, long id) {
         System.out.println(id);
-        Optional <MyUser> u = userRepository.findById(id);
+        Optional <User> u = userRepository.findById(id);
 
-        System.out.println(u);
        if(u.isPresent()) {
            if(u.get().getRoles() == null) {
            u.get().setRoles(new HashSet<>());
@@ -97,13 +92,10 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public MyUser findLoggedInUserByUserName() {
+    public User findLoggedInUserByUserName() {
         org.springframework.security.core.userdetails.UserDetails userDetails = (org.springframework.security.core.userdetails.UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Optional<MyUser> user = userRepository.findByUsername(userDetails.getUsername());
-        if (user.isPresent()) {
-            return user.get();
-        }
-        throw new UsernameNotFoundException("User not found");
+        Optional<User> user = userRepository.findByUsername(userDetails.getUsername());
+        return user.orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
 

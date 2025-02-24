@@ -4,15 +4,12 @@ package com.example.PPSecure.model;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "user")
-public class MyUser {
+public class User {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,12 +33,12 @@ public class MyUser {
     )
     private Set<Role> roles;
 
-    public MyUser(String username, int age) {
+    public User(String username, int age) {
         this.username = username;
         this.age = age;
     }
 
-    public MyUser() {
+    public User() {
     }
 
     public void setRoles(Set<Role> roles) {

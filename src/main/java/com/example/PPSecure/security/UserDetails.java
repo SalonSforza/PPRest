@@ -1,31 +1,31 @@
 package com.example.PPSecure.security;
 
-import com.example.PPSecure.model.MyUser;
+import com.example.PPSecure.model.User;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
 
 public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
-    private final MyUser myUser;
+    private final User user;
 
-    public UserDetails(MyUser myUser) {
-        this.myUser = myUser;
+    public UserDetails(User user) {
+        this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return myUser.getRoles();
+        return user.getRoles();
     }
 
     @Override
     public String getPassword() {
-        return this.myUser.getPassword();
+        return this.user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return this.myUser.getUsername();
+        return this.user.getUsername();
     }
 
     @Override
@@ -49,7 +49,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
     }
 
 
-    public MyUser getMyUser() {
-        return myUser;
+    public User getMyUser() {
+        return user;
     }
 }
