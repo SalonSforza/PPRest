@@ -1,9 +1,12 @@
 package com.example.PPSecure.services;
 
+import com.example.PPSecure.DTO.UserDTOtoReceive;
+import com.example.PPSecure.DTO.UserDTOtoSend;
 import com.example.PPSecure.model.User;
 import com.example.PPSecure.repositories.RoleRepository;
 import com.example.PPSecure.repositories.UserRepository;
 import com.example.PPSecure.security.UserDetails;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, RoleService roleService) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
 
         this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -56,8 +60,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public List<UserDTOtoSend> findAll() {
+        ModelMapper modelMapper = new ModelMapper();
+        List <User> users = userRepository.findAll();
+        List<UserDTOtoSend> userDTOtoSend = new ArrayList<>();
+        for (User user : users) {
+          userDTOtoSend.add(modelMapper.map(user, UserDTOtoSend.class));
+        }
+        return userDTOtoSend;
     }
 
     @Transactional
@@ -93,7 +103,9 @@ public class UserServiceImpl implements UserService {
 
 
     public User findLoggedInUserByUserName() {
-        org.springframework.security.core.userdetails.UserDetails userDetails = (org.springframework.security.core.userdetails.UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        org.springframework.security.core.userdetails.UserDetails userDetails =
+                (org.springframework.security.core.userdetails.UserDetails) SecurityContextHolder
+                        .getContext().getAuthentication().getPrincipal();
         Optional<User> user = userRepository.findByUsername(userDetails.getUsername());
         return user.orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }

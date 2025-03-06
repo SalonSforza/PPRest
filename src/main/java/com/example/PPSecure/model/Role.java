@@ -1,5 +1,7 @@
 package com.example.PPSecure.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -28,6 +30,7 @@ public class Role implements GrantedAuthority {
     }
 
     @Override
+    @JsonIgnore
     public String getAuthority() {
         return roleDesignation;
     }
@@ -47,12 +50,21 @@ public class Role implements GrantedAuthority {
     public void setRoleDesignation(String roleDesignation) {
         this.roleDesignation = roleDesignation;
     }
-
+    @JsonBackReference
     public Set<User> getMyUsers() {
         return users;
     }
 
     public void setMyUsers(Set<User> users) {
         this.users = users;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Role{" +
+               "id=" + id +
+               ", roleDesignation='" + roleDesignation + '\'' +
+               '}';
     }
 }
