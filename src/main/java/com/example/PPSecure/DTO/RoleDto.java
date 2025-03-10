@@ -1,19 +1,19 @@
 package com.example.PPSecure.DTO;
 
-public class RoleDTO {
+public class RoleDto {
 
-    public RoleDTO() {
+    public RoleDto() {
     }
 
     private String roleDesignation;
 
     private long id;
 
-    public RoleDTO(String roleDesignation) {
+    public RoleDto(String roleDesignation) {
         this.roleDesignation = roleDesignation;
     }
 
-    public RoleDTO(String roleDesignation, long id) {
+    public RoleDto(String roleDesignation, long id) {
         this.roleDesignation = roleDesignation;
         this.id = id;
     }

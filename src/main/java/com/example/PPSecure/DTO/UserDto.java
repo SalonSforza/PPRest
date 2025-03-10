@@ -1,10 +1,8 @@
 package com.example.PPSecure.DTO;
 
-import com.example.PPSecure.model.Role;
-
 import java.util.Set;
 
-public class UserDTOtoReceive {
+public class UserDto {
 
     public long getId() {
         return id;
@@ -22,17 +20,17 @@ public class UserDTOtoReceive {
 
     private String password;
 
-    private Set<RoleDTO> roles;
+    private Set<RoleDto> roles;
 
 
-    public UserDTOtoReceive(String username, int age, long id, Set<RoleDTO> roles) {
+    public UserDto(String username, int age, long id, Set<RoleDto> roles) {
         this.username = username;
         this.age = age;
         this.roles = roles;
         this.id = id;
     }
 
-    public UserDTOtoReceive() {
+    public UserDto() {
     }
 
     public String getUsername() {
@@ -59,11 +57,11 @@ public class UserDTOtoReceive {
         this.password = password;
     }
 
-    public Set<RoleDTO> getRoles() {
+    public Set<RoleDto> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<RoleDTO> roles) {
+    public void setRoles(Set<RoleDto> roles) {
         this.roles = roles;
     }
 

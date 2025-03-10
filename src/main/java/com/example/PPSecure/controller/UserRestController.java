@@ -1,7 +1,7 @@
 package com.example.PPSecure.controller;
 
-import com.example.PPSecure.DTO.RoleDTO;
-import com.example.PPSecure.DTO.UserDTOtoReceive;
+import com.example.PPSecure.DTO.RoleDto;
+import com.example.PPSecure.DTO.UserDto;
 import com.example.PPSecure.DTO.UserDTOtoSend;
 import com.example.PPSecure.model.Role;
 import com.example.PPSecure.model.User;
@@ -20,14 +20,14 @@ import java.util.Set;
 @RequestMapping("/api")
 public class UserRestController {
 
-    private final UserServiceImpl userServiceImpl;
-    UserServiceImpl UserServiceImpl;
+
+    UserServiceImpl userServiceImpl;
     RoleServiceImpl roleServiceImpl;
     ModelMapper modelMapper;
 
     @Autowired
     public UserRestController(UserServiceImpl UserServiceImpl, RoleServiceImpl roleServiceImpl, ModelMapper modelMapper, UserServiceImpl userServiceImpl) {
-        this.UserServiceImpl = UserServiceImpl;
+        this.userServiceImpl = UserServiceImpl;
         this.roleServiceImpl = roleServiceImpl;
         this.modelMapper = modelMapper;
         this.userServiceImpl = userServiceImpl;
@@ -35,52 +35,51 @@ public class UserRestController {
 
     @GetMapping("/users")
     public List<UserDTOtoSend> showAll() {
-        return UserServiceImpl.findAll();
+        return userServiceImpl.findAll();
     }
 
     @GetMapping("/newUser")
-    public UserDTOtoReceive newUser() {
-        return new UserDTOtoReceive() ;
+    public UserDto newUser() {
+        return new UserDto() ;
     }
 
     @PostMapping ("/newUser")
-    public ResponseEntity<HttpStatus> saveUser(@RequestBody UserDTOtoReceive userDTOtoReceive) {
-        UserServiceImpl.save(covertToUser(userDTOtoReceive));
+    public ResponseEntity<HttpStatus> saveUser(@RequestBody UserDto userDto) {
+        userServiceImpl.save(covertToUser(userDto));
         return new ResponseEntity<>(HttpStatus.OK) ;
     }
 
     @DeleteMapping("/users/{Id}")
-    public ResponseEntity<HttpStatus> findUserToDelete(@PathVariable int Id) {
-        UserServiceImpl.deleteById(Id);
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable int Id) {
+        userServiceImpl.deleteById(Id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/user")
-    public  ResponseEntity<HttpStatus> updateUser(@RequestBody UserDTOtoReceive userDTOtoReceive) {
-        System.out.println(userDTOtoReceive);
-        User user = covertToUser(userDTOtoReceive);
-        UserServiceImpl.update(user, user.getId());
+    public  ResponseEntity<HttpStatus> updateUser(@RequestBody UserDto userDto) {
+        System.out.println(userDto);
+        userServiceImpl.update(covertToUser(userDto), covertToUser(userDto).getId());
         return  new ResponseEntity<>(HttpStatus.OK);
     }
 
 
     @GetMapping ("/user")
     public UserDTOtoSend getLoggedInUser(){
-        return covertToUserDTOtoSend(UserServiceImpl.findLoggedInUserByUserName());
+        return covertToUserDTOtoSend(userServiceImpl.findLoggedInUserByUserName());
     }
 
     @GetMapping ("/user/{id}")
     public UserDTOtoSend getUserById(@PathVariable int id) {
-        return covertToUserDTOtoSend(UserServiceImpl.findById(id));
+        return covertToUserDTOtoSend(userServiceImpl.findById(id));
     }
 
     @GetMapping ("/roles")
-    public Set<RoleDTO> getRoles() {
-        return roleServiceImpl.findRoleDTOs();
+    public Set<RoleDto> getRoles() {
+        return roleServiceImpl.getRoleDTOs();
     }
 
 
-    public User covertToUser(UserDTOtoReceive dtOtoReceive) {
+    public User covertToUser(UserDto dtOtoReceive) {
         return modelMapper.map(dtOtoReceive, User.class);
     }
 
@@ -88,19 +87,19 @@ public class UserRestController {
         return modelMapper.map(dtOtoSend, User.class);
     }
 
-    public UserDTOtoReceive covertToUserDTOtoReceive(User user) {
-        return modelMapper.map(user, UserDTOtoReceive.class);
+    public UserDto covertToUserDTOtoReceive(User user) {
+        return modelMapper.map(user, UserDto.class);
     }
 
     public UserDTOtoSend covertToUserDTOtoSend(User user) {
         return modelMapper.map(user, UserDTOtoSend.class);
     }
 
-    public RoleDTO covertToRoleDTOtoRole(Role role) {
-        return modelMapper.map(role, RoleDTO.class);
+    public RoleDto covertToRoleDTOtoRole(Role role) {
+        return modelMapper.map(role, RoleDto.class);
     }
 
-    public Role covertToRole(RoleDTO dto) {
+    public Role covertToRole(RoleDto dto) {
         return modelMapper.map(dto, Role.class);
     }
 
